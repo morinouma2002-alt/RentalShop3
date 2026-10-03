@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 import DVD.DVD;
 import Guest.Guest;
-import Manager.Manager;
+import Manager.AiManager;
 import Manager.ZaikoKanri;
 public class RentalMenu implements Menu {
 
 	private ZaikoKanri zaiko;
 	private Guest guest =null;
-	private Manager manager;
+	private AiManager manager;
 	
-	public RentalMenu(ZaikoKanri zaiko,Guest guest,Manager manager) {
+	public RentalMenu(ZaikoKanri zaiko,Guest guest,AiManager manager) {
 		this.zaiko = zaiko;
 		this.guest=guest;
 		this.manager=manager;

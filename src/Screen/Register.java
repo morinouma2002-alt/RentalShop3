@@ -4,14 +4,17 @@ import java.util.List;
 import java.util.Scanner;
 
 import Guest.Guest;
+import Manager.AiManager;
 
 public class Register implements Menu {
 
 	private Guest guest;
+	private AiManager ai;
 
-	public Register(Guest guest) {
+	public Register(Guest guest,AiManager ai) {
 
 		this.guest = guest;
+		this.ai=ai;
 	}
 
 	@Override
@@ -28,6 +31,9 @@ public class Register implements Menu {
 		if (register) {
 			System.out.println("登録します");
 			guest.setRegister();
+			
+			//会員リストを貯めておく
+			ai.setRegisterGuest(guest);
 
 		} else {
 			System.out.println("登録しません");

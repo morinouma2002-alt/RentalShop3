@@ -6,19 +6,19 @@ import java.util.Scanner;
 
 import Guest.Guest;
 import Guest.normalGuest;
-import Manager.Manager;
+import Manager.AiManager;
 import Manager.ZaikoKanri;
 
 public class TopMenu implements Menu {
 
 	private ZaikoKanri zaiko;
 	private Scanner sc;
-	private Manager manager;
+	private AiManager ai;
 
-	public TopMenu(ZaikoKanri zaikoKanri, Scanner sc, Manager manager) {
+	public TopMenu(ZaikoKanri zaikoKanri, Scanner sc, AiManager manager) {
 		this.zaiko = zaikoKanri;
 		this.sc = sc;
-		this.manager = manager;
+		this.ai = manager;
 	}
 
 	@Override
@@ -35,16 +35,16 @@ public class TopMenu implements Menu {
 
 			String text = """
 					レンタルDVD
-					1,レンタル				
-					2,返却					
-					3,検索                  
-					4,会員登録              
-					5,現在の状態を確認する  
+					1,レンタル
+					2,返却
+					3,検索
+					4,会員登録
+					5,現在の状態を確認する
 
-					6,次の客を生成する OR 以前の客を呼び出す 
+					6,次の客を生成する OR 以前の客を呼び出す
 					7,1日目が終了する
 					8,店の関係者のみ閲覧可能
-					9,システム自体を止める   
+					9,システム自体を止める
 					""";
 
 			System.out.println(text);
@@ -53,16 +53,16 @@ public class TopMenu implements Menu {
 
 			//続き
 			switch (select) {
-			case 1 -> dispSubMenu(new RentalMenu(zaiko, guest, manager));
+			case 1 -> dispSubMenu(new RentalMenu(zaiko, guest, ai));
 			case 2 -> {
 
-				ReturnMenu ret = new ReturnMenu(guest, manager, list);
+				ReturnMenu ret = new ReturnMenu(guest, ai, list);
 				dispSubMenu(ret);
 				guest = ret.getResult();//入れ替わった客を受け取る
 
 			}
 			case 3 -> dispSubMenu(new Search(guest, zaiko));
-			case 4 -> dispSubMenu(new Register(guest));
+			case 4 -> dispSubMenu(new Register(guest,ai));
 			case 5 -> dispSubMenu(new Check(guest));
 			case 6 -> guest = productGuest(list);
 
@@ -72,6 +72,13 @@ public class TopMenu implements Menu {
 				dispSubMenu(end);
 				guest = end.getResult(); // 差し替わった客を受け取る
 
+			}
+
+			case 8 -> {
+
+				System.out.println("関係者ですか?");
+			    ai.checkEmployee(sc);
+				
 			}
 
 			default -> found = false;

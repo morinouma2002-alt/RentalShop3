@@ -7,19 +7,19 @@ import DVD.DVD;
 import Guest.Guest;
 import Guest.normalGuest;
 import Guest.postponeGuest;
-import Manager.Manager;
+import Manager.AiManager;
 
 public class ReturnMenu implements Menu {
 
 	//EndDayと同じ感じにする
 	
 	private Guest guest;
-	private Manager manager;
+	private AiManager manager;
 	private List<Guest> list;
 	private Guest result;   // 処理後の客（TopMenu が受け取る）
 
 	//★★Guest guestは　normalか　postponeの可能性がある　guest変数名
-	public ReturnMenu(Guest guest, Manager manager, List<Guest> list) {
+	public ReturnMenu(Guest guest, AiManager manager, List<Guest> list) {
 		this.guest = guest;
 		this.manager = manager;
 		this.list = list;

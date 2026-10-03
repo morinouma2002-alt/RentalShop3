@@ -1,52 +1,63 @@
 package Manager;
 
-public class Manager {
+import java.util.List;
+import java.util.Scanner;
 
-	private long assets=0;//資産
-	
-	private int[] price = { 150, 100, 50 };
-	
-	public void setAssets(int money) {
-		assets+=money;
-	}
-	
-	public void postAssets() {
-		assets+=500;
+import Guest.Guest;
+
+public class Manager extends AiManager {
+
+	public Manager(String name, int key, ZaikoKanri zaiko, Scanner sc) {
+		super(name, key, zaiko, sc);
 	}
 
-	public void cal(int value,boolean register) {
-		
-		if(register) {
-			System.out.println("会員なので、新作は20%オフ");
-		}else {
-			System.out.println("非会員なので、旧作は20&オフ");
-		}
-		
-		int money=0;
-		if(value==1) {
-			
-			if(register) {
-				money=(int)(price[0]*0.8);
-			}else {
-				money=price[0];
+	public void printCheck() {
+
+		boolean found = true;
+
+		while (found) {
+
+			String textBlock = """
+					1,在庫チェック
+					2,会員登録者をチェック
+					3,売上をチェックする
+					4,延滞客を見る
+					5,以上は終了
+					""";
+
+			System.out.println(textBlock);
+			int n = sc.nextInt();
+
+			switch (n) {
+			case 1 -> checkZaiko();
+
+			//case 2から続き
+			case 2 -> {
+				printCheckRegister();
 			}
-			
-		}else if(value==2) {
-			money=price[1];
-			
-		}else {
-			
-			if(register) {
-				money=price[2];
-			}else {
-				money=(int)(price[2]*0.8);
+			case 3 -> boss.checkAssets();
+			case 5 -> found = false;
+			default -> System.out.println("１から５選んでださい");
 			}
+
 		}
-		
-		setAssets(money);
-		
-		System.out.println("商品の値段は"+money+"円です");
-		
-	
+	}
+
+	public void printCheckRegister() {
+
+		List<Guest> getRegisterList = boss.registerGuest;
+		if (getRegisterList.size() == 0) {
+			System.out.println("登録者はいません");
+			return;
+		}
+
+		System.out.println("登録者の情報を提供します");
+		System.out.println("----会員登録者リスト----");
+
+		for (int i = 0; i < getRegisterList.size(); i++) {
+			Guest guest = getRegisterList.get(i);
+			//続き
+			guest.displayRegister();
+		}
 	}
 }
